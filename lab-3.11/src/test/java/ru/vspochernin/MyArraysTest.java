@@ -263,4 +263,45 @@ class MyArraysTest {
                             ", toIndex: " + toIndex);
         }
     }
+
+    @Test
+    public void testShortBinarySearchRandomArrays() {
+        for (int i = 0; i < NUM_TESTS; i++) {
+            random = new Random();
+
+            short[] array = new short[random.nextInt(MAX_ARRAY_SIZE)];
+            int len = array.length;
+
+            for (int j = 0; j < len; j++) {
+                array[j] = (short) random.nextInt(65536);
+            }
+
+            Arrays.sort(array);
+
+            short key = random.nextBoolean() && len > 0
+                    ? array[random.nextInt(len)]
+                    : (short) random.nextInt(65536);
+
+            assertEquals(
+                    Arrays.binarySearch(array, key),
+                    MyArrays.binarySearch(array, key),
+                    "Некорректный ответ для массива: " + Arrays.toString(array) +
+                            ", key: " + key);
+
+            int fromIndex = len > 1
+                    ? random.nextInt(len / 2)
+                    : 0;
+            int toIndex = len > 1
+                    ? fromIndex + random.nextInt(len / 2)
+                    : len == 1 ? 1 : 0;
+
+            assertEquals(
+                    Arrays.binarySearch(array, fromIndex, toIndex, key),
+                    MyArrays.binarySearch(array, fromIndex, toIndex, key),
+                    "Некорректный ответ для массива: " + Arrays.toString(array) +
+                            ", key: " + key +
+                            ", fromIndex: " + fromIndex +
+                            ", toIndex: " + toIndex);
+        }
+    }
 }

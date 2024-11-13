@@ -160,6 +160,31 @@ public class MyArrays {
         return -(low + 1);
     }
 
+    // 13.
+    public static int binarySearch(short[] a, short key) {
+        return binarySearch(a, 0, a.length, key);
+    }
+
+    // 14.
+    public static int binarySearch(short[] a, int fromIndex, int toIndex, short key) {
+        int low = fromIndex;
+        int high = toIndex - 1;
+
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            short midVal = a[mid];
+
+            if (midVal < key) {
+                low = mid + 1;
+            } else if (midVal > key) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -(low + 1);
+    }
+
     private static int compare(double a, double b) {
         if (Math.abs(a - b) < EPS) {
             return 0;
