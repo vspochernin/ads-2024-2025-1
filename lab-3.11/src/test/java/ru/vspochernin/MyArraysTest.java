@@ -30,7 +30,7 @@ class MyArraysTest {
             Arrays.sort(array);
 
             // Берем ключ для поиска либо из массива, либо случайный.
-            byte key = random.nextInt(10) >= 5 && len > 0
+            byte key = random.nextBoolean() && len > 0
                     ? array[random.nextInt(len)]
                     : (byte) random.nextInt(256);
 
@@ -73,7 +73,7 @@ class MyArraysTest {
 
             Arrays.sort(array);
 
-            char key = random.nextInt(10) >= 5 && len > 0
+            char key = random.nextBoolean() && len > 0
                     ? array[random.nextInt(len)]
                     : (char) random.nextInt(65536);
 
@@ -109,14 +109,14 @@ class MyArraysTest {
             int len = array.length;
 
             for (int j = 0; j < len; j++) {
-                array[j] = random.nextDouble(1_000_000_000.0);
+                array[j] = random.nextDouble();
             }
 
             Arrays.sort(array);
 
-            double key = random.nextInt(10) >= 5 && len > 0
+            double key = random.nextBoolean() && len > 0
                     ? array[random.nextInt(len)]
-                    : random.nextDouble(1_000_000_000.0);
+                    : random.nextDouble();
 
             assertEquals(
                     Arrays.binarySearch(array, key),
@@ -150,14 +150,55 @@ class MyArraysTest {
             int len = array.length;
 
             for (int j = 0; j < len; j++) {
-                array[j] = random.nextFloat(1_000_000.0f);
+                array[j] = random.nextFloat();
             }
 
             Arrays.sort(array);
 
-            float key = random.nextInt(10) >= 5 && len > 0
+            float key = random.nextBoolean() && len > 0
                     ? array[random.nextInt(len)]
-                    : random.nextFloat(1_000_000.0f);
+                    : random.nextFloat();
+
+            assertEquals(
+                    Arrays.binarySearch(array, key),
+                    MyArrays.binarySearch(array, key),
+                    "Некорректный ответ для массива: " + Arrays.toString(array) +
+                            ", key: " + key);
+
+            int fromIndex = len > 1
+                    ? random.nextInt(len / 2)
+                    : 0;
+            int toIndex = len > 1
+                    ? fromIndex + random.nextInt(len / 2)
+                    : len == 1 ? 1 : 0;
+
+            assertEquals(
+                    Arrays.binarySearch(array, fromIndex, toIndex, key),
+                    MyArrays.binarySearch(array, fromIndex, toIndex, key),
+                    "Некорректный ответ для массива: " + Arrays.toString(array) +
+                            ", key: " + key +
+                            ", fromIndex: " + fromIndex +
+                            ", toIndex: " + toIndex);
+        }
+    }
+
+    @Test
+    public void testIntBinarySearchRandomArrays() {
+        for (int i = 0; i < NUM_TESTS; i++) {
+            random = new Random();
+
+            int[] array = new int[random.nextInt(MAX_ARRAY_SIZE)];
+            int len = array.length;
+
+            for (int j = 0; j < len; j++) {
+                array[j] = random.nextInt();
+            }
+
+            Arrays.sort(array);
+
+            int key = random.nextBoolean() && len > 0
+                    ? array[random.nextInt(len)]
+                    : random.nextInt();
 
             assertEquals(
                     Arrays.binarySearch(array, key),

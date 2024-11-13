@@ -2,8 +2,7 @@ package ru.vspochernin;
 
 public class MyArrays {
 
-    public static final double EPS_DOUBLE = 1e-9;
-    public static final float EPS_FLOAT = 1e-6f;
+    public static final double EPS = 1e-9;
 
     // Поиск по всему массиву.
     // 1.
@@ -112,7 +111,7 @@ public class MyArrays {
     }
 
     private static int compare(double a, double b) {
-        if (Math.abs(a - b) < EPS_DOUBLE) {
+        if (Math.abs(a - b) < EPS) {
             return 0;
         } else {
             return a - b > 0 ? 1 : -1;
@@ -120,10 +119,36 @@ public class MyArrays {
     }
 
     private static int compare(float a, float b) {
-        if (Math.abs(a - b) < EPS_FLOAT) {
+        if (Math.abs(a - b) < EPS) {
             return 0;
         } else {
             return a - b > 0 ? 1 : -1;
         }
+    }
+
+
+    // 9.
+    public static int binarySearch(int[] a, int key) {
+        return binarySearch(a, 0, a.length, key);
+    }
+
+    // 10.
+    public static int binarySearch(int[] a, int fromIndex, int toIndex, int key) {
+        int low = fromIndex;
+        int high = toIndex - 1;
+
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            int midVal = a[mid];
+
+            if (midVal < key) {
+                low = mid + 1;
+            } else if (midVal > key) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -(low + 1);
     }
 }
