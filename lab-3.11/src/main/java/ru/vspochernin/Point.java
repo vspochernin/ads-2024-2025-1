@@ -33,4 +33,12 @@ public class Point implements Comparable<Point> {
         }
         return Integer.compare(this.x, o.x);
     }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

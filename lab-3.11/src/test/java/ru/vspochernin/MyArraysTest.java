@@ -317,7 +317,7 @@ class MyArraysTest {
                 array[j] = Point.getRandom(random);
             }
 
-            Arrays.sort(array);
+            Arrays.sort(array, Point.comparator);
 
             Point key = random.nextBoolean() && len > 0
                     ? array[random.nextInt(len)]
