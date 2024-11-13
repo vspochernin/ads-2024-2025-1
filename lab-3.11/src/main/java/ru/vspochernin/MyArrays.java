@@ -3,6 +3,7 @@ package ru.vspochernin;
 public class MyArrays {
 
     public static final double EPS_DOUBLE = 1e-9;
+    public static final float EPS_FLOAT = 1e-6f;
 
     // Поиск по всему массиву.
     // 1.
@@ -83,8 +84,43 @@ public class MyArrays {
         return -(low + 1);
     }
 
+    // 7.
+    public static int binarySearch(float[] a, float key) {
+        return binarySearch(a, 0, a.length, key);
+    }
+
+    // 8.
+    public static int binarySearch(float[] a, int fromIndex, int toIndex, float key) {
+        int low = fromIndex;
+        int high = toIndex - 1;
+
+        while (low <= high) {
+            int mid = (low + high) >>> 1;
+            float midVal = a[mid];
+
+            int cmp = compare(midVal, key);
+
+            if (cmp < 0) {
+                low = mid + 1;
+            } else if (cmp > 0) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+        return -(low + 1);
+    }
+
     private static int compare(double a, double b) {
         if (Math.abs(a - b) < EPS_DOUBLE) {
+            return 0;
+        } else {
+            return a - b > 0 ? 1 : -1;
+        }
+    }
+
+    private static int compare(float a, float b) {
+        if (Math.abs(a - b) < EPS_FLOAT) {
             return 0;
         } else {
             return a - b > 0 ? 1 : -1;
